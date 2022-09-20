@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import AudioControls from "./AudioControls";
 import Backdrop from "./Backdrop";
-import "./styles.css";
+import "./App.css";
 
-/*
- * Read the blog post here:
- * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
- */
 const App = ({ tracks }) => {
   // State
   const [trackIndex, setTrackIndex] = useState(0);
@@ -75,6 +71,32 @@ const App = ({ tracks }) => {
     }
   };
 
+  const requestFullScreen = () => {
+    let de = document.documentElement;
+    if (de.requestFullscreen) {
+      de.requestFullscreen();
+    } else if (de.mozRequestFullScreen) {
+      de.mozRequestFullScreen();
+    } else if (de.webkitRequestFullScreen) {
+      de.webkitRequestFullScreen();
+    } else if (de.msRequestFullscreen) {
+      de.msRequestFullscreen();
+    }
+  }
+
+  const exitFullScreen = () => {
+    let de = document.documentElement;
+    if (de.ExitFullscreen) {
+      de.ExitFullscreen();
+    } else if (de.mozExitFullScreen) {
+      de.mozExitFullScreen();
+    } else if (de.webkitExitFullScreen) {
+      de.webkitExitFullScreen();
+    } else if (de.msExitFullscreen) {
+      de.msExitFullscreen();
+    }
+  }
+
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
@@ -108,6 +130,7 @@ const App = ({ tracks }) => {
       clearInterval(intervalRef.current);
     };
   }, []);
+
 
   return (
     <div className="audio-player">
